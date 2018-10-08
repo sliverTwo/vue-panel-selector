@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
+		<title>选择器</title>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<div id="app" style="margin:20% auto;">
+			 <vue-panel-selector :items="items" :level="level" :show-sel-all="showSelAll" :row="10" :max-item-num = "2" @on-ok="getSelItems">
+				 <span slot>
+					 选择城市
+				 </span>
+			 </vue-panel-selector>
+		</div>
+		<script src="https://lib.baomitu.com/vue/2.5.17/vue.js"></script>
+		 <script src="dist/vue-panel-selector.js"></script>
+	</body>
+	<script>
+		let myCityData = [{
+			id: '100',
+			name: '湖南',
+			children: [{
+				id: '102',
+				name: '湘潭',
+				children: []
+			}, {
+				id: '110',
+				name: '长沙',
+				children: [{
+					id: '111',
+					name: '岳麓区'
+				}, {
+					id: '112',
+					name: '开福区'
+				}, {
+					id: '113',
+					name: '高新区'
+				}, {
+					id: '114',
+					name: '望城区'
+				}, {
+					id: '115',
+					name: '雨花区'
+				}, {
+					id: '116',
+					name: '天心区'
+				}, {
+					id: '116',
+					name: '宁乡县'
+				}, {
+					id: '116',
+					name: '芙蓉区'
+				}, {
+					id: '116',
+					name: '浏阳市'
+				}, ]
+			}, {
+				id: '103',
+				name: '邵阳',
+				children: []
+			}, {
+				id: '101',
+				name: '岳阳',
+				children: []
+			}, {
+				id: '102',
+				name: '衡阳',
+				children: []
+			}, {
+				id: '103',
+				name: '怀化',
+				children: []
+			}, ]
+		}, {
+			id: '002',
+			name: '广东',
+			children: [{
+				id: '201',
+				name: '广州',
+				children: []
+			}, {
+				id: '202',
+				name: '深圳',
+				children: []
+			}, {
+				id: '203',
+				name: '韶关',
+				children: []
+			}, {
+				id: '204',
+				name: '东莞',
+				children: []
+			}, ]
+		}, {
+			id: '003',
+			name: '四川',
+			children: [{
+				id: '301',
+				name: '成都',
+				children: []
+			}, {
+				id: '302',
+				name: '绵阳',
+				children: []
+			}, {
+				id: '303',
+				name: '自贡',
+				children: []
+			}, ]
+		}, {
+			id: '004',
+			name: '贵州',
+			children: []
+		}, {
+			id: '005',
+			name: '江西',
+			children: []
+		}];
+		var vm = new Vue({
+			el: '#app',
+			data:{
+				items:myCityData,
+				level:2,
+				showSelAll:true,
+			},
+			methods:{
+				getSelItems(items){
+					console.log(items);
+				}
+			}
+		});
+	</script>
+
+</html>
