@@ -9,7 +9,7 @@
 			</div>
 			<div style="height:653px; ">
 				<div class="panel-content">
-					<div class="show-area">
+					<div class="show-area nui-scroll">
 						<div class="show-item-div">
 							<span v-for="selItem in selItems" class="show-item" @click="toggleSel(selItem)">
 								<span>
@@ -23,13 +23,13 @@
 						</div>
 					</div>
 					<!-- 左侧列表 -->
-					<div class="panel-left">
+					<div class="panel-left nui-scroll">
 						<div class="item" v-for="item of items" :class="{'item-sel':item.id == currItem.id}" @click="activeCurr(item)">
 							{{item.name}}
 						</div>
 					</div>
 					<!-- 中间列表 -->
-					<div class="panel-right">
+					<div class="panel-right nui-scroll">
 						<!-- 两项的处理 -->
 						<div v-if="level == 2" class="sub-div-no-child">
 							<div class="sub-item" :style="{'min-width': rowWidth + '%'}" v-if="showSelAll">
@@ -42,7 +42,7 @@
 							</template>
 						</div>
 						<!-- 3项的处理 -->
-						<div class="sub-div" v-else>
+						<div class="sub-div nui-scroll" v-else>
 							<template v-for="item,index in currItem.children">
 								<div class="sub-item" :style="{'min-width': rowWidth + '%'}">
 									<span :class="isSel(item)" @click="showSubItem(item)">{{item.name}}</span>
