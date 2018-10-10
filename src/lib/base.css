@@ -4,41 +4,28 @@
 [v-cloak] {
 	display: none;
 }
-#app {
-	margin: 10% 30%;
-
-}
 .ivu-modal-body{
 	padding: 0;
 }
-#panel-selector {
-	
-}
 
-#content{
+.panel-content{
 	height: 100%;
 }
-#left,#right{
+.panel-left,.panel-right{
 	height: 92%;
 }
-#left {
+.panel-left {
 	border-right: 1px solid aqua;
 	float: left;
 	width: 20%;
 	background: #E5E5E5;
 }
 
-#right {
+.panel-right {
 	float: right;
 	width: 79%;
 }
 
-#bottom {
-	height: 10%;
-	text-align: center;
-	background: whitesmoke;
-	padding-top: 10px;
-}
 
 .item {
 	text-align: left;

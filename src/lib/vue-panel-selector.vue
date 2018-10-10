@@ -4,11 +4,11 @@
 			<slot>选择</slot>
 		</Button>
 		<Modal v-model="visible" width="970px" :mask-closable="false" @on-ok="getSelItems" :scrollable="true">
-			<div id="header" slot="header">
+			<div  slot="header">
 				<span style="font-size: 18px;">选择城市:</span><span id="tips">(最多只能选择{{maxItemNum}}项):</span>
 			</div>
 			<div style="height:653px; ">
-				<div id="content">
+				<div class="panel-content">
 					<div class="show-area">
 						<div class="show-item-div">
 							<span v-for="selItem in selItems" class="show-item" @click="toggleSel(selItem)">
@@ -23,13 +23,13 @@
 						</div>
 					</div>
 					<!-- 左侧列表 -->
-					<div id="left">
+					<div class="panel-left">
 						<div class="item" v-for="item of items" :class="{'item-sel':item.id == currItem.id}" @click="activeCurr(item)">
 							{{item.name}}
 						</div>
 					</div>
 					<!-- 中间列表 -->
-					<div id="right">
+					<div class="panel-right">
 						<!-- 两项的处理 -->
 						<div v-if="level == 2" class="sub-div-no-child">
 							<div class="sub-item" :style="{'min-width': rowWidth + '%'}" v-if="showSelAll">
