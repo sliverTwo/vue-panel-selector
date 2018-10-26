@@ -22,8 +22,10 @@ npm run build
 items|Array|操作的数据格式[{id:001,name:'湖南'，children:[{id:0011,name:"长沙",children:[]}]}]|无
 max-item-num|Number|可选择的最大数量|10
 show-sel-all|Boolean|是否显示所有选项|false
-row|Number|每行显示多少项|5
-
+<!-- row|Number|每行显示多少项|5 -->
+titleTip|String|顶部显示的提示|请选择
+level|Nunber|支持的层级|2 or 3
+showSelAll|Boolean|是否显示选择所有|false
 事件|说明|参数
 --|--|
 on-ok|点击确认后的回调,返回选中的项|selItems

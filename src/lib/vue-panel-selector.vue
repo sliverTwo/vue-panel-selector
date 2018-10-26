@@ -4,10 +4,10 @@
 			<slot>选择</slot>
 		</Button>
 		<Modal v-model="visible" width="970px" :mask-closable="false" @on-ok="getSelItems" :scrollable="true">
-			<div  slot="header">
-				<span style="font-size: 18px;">选择城市:</span><span id="tips">(最多只能选择{{maxItemNum}}项):</span>
+			<div slot="header">
+				<span style="font-size: 18px;">{{titleTip}}</span><span id="tips">(最多只能选择{{maxItemNum}}项):</span>
 			</div>
-			<div style="height:653px; ">
+			<div style="height:653px; overflow: auto;" class="nui-scroll">
 				<div class="panel-content">
 					<div class="show-area nui-scroll">
 						<div class="show-item-div">
@@ -24,7 +24,8 @@
 					</div>
 					<!-- 左侧列表 -->
 					<div class="panel-left nui-scroll">
-						<div class="item" v-for="item of items" :class="{'item-sel':item.id == currItem.id}" @click="activeCurr(item)">
+						<div class="item" v-for="item of items" :class="{'item-sel':item.id == currItem.id}" :style="autoFontSize(item)"
+						 @click="activeCurr(item)">
 							{{item.name}}
 						</div>
 					</div>
@@ -32,28 +33,31 @@
 					<div class="panel-right nui-scroll">
 						<!-- 两项的处理 -->
 						<div v-if="level == 2" class="sub-div-no-child">
-							<div class="sub-item" :style="{'min-width': rowWidth + '%'}" v-if="showSelAll">
+							<div class="sub-item" v-if="showSelAll">
 								<span class="leaf-item" @click="toggleSel(currItem)" :class="isSel(currItem)">所有</span>
 							</div>
 							<template v-for="(item,index) in currItem.children">
-								<div class="sub-item" :style="{'min-width': rowWidth + '%'}">
+								<div class="sub-item">
 									<span :class="isSel(item)" @click="toggleSelSub(currItem,item)">{{item.name}}</span>
 								</div>
 							</template>
 						</div>
 						<!-- 3项的处理 -->
 						<div class="sub-div nui-scroll" v-else>
-							<template v-for="item,index in currItem.children">
-								<div class="sub-item" :style="{'min-width': rowWidth + '%'}">
+							<div class="sub-item" v-if="showSelAll && !hasChildren(currItem)">
+								<span class="leaf-item" @click="toggleSel(currItem)" :class="isSel(currItem)">所有</span>
+							</div>
+							<template v-for="item,index in currItem.children" v-if="item.id">
+								<div class="sub-item">
 									<span :class="isSel(item)" @click="showSubItem(item)">{{item.name}}</span>
 									<!-- 									<span :class="isSel(item)" @click="showSubItem(item)" v-if="hasChildren(item)">{{item.name}}</span> -->
 									<!-- <span :class="isSel(item)" @click="toggleSel(item)" v-else>{{item.name}}</span> -->
 								</div>
 							</template>
 						</div>
-						<!--  使用弹出层进行展示 -->
-						<div v-for="item,index in currItem.children" class="leaf-div" v-if="level == 3 && hasChildren(item)" v-show="currSelId == item.id">
-							<span class="leaf-item" @click="toggleSel(item)" :class="isSel(item)" v-if="showSelAll" :style="{'min-width': leafRowWidth + '%'}">所有</span>
+						<!--  第三层 -->
+						<div v-for="item,index in currItem.children" class="leaf-div" v-if="level == 3" v-show="currSelId == item.id">
+							<span class="leaf-item" @click="toggleSel(item)" :class="isSel(item)" v-if="showSelAll">所有</span>
 							<span v-for="subItem in item.children" class="leaf-item" @click="toggleSelSub(item,subItem)" :class="isSel(subItem)"
 							 :style="{'min-width': leafRowWidth + '%'}">
 								{{subItem.name}}
@@ -96,6 +100,10 @@
 			row: {
 				type: Number,
 				default: 5
+			},
+			titleTip:{
+				type:String,
+				default:'请选择'
 			}
 		},
 		data() {
@@ -123,10 +131,10 @@
 				if (this.selItems.includes(item)) {
 					this.cancelSel(item);
 				} else {
-					this.sel(item);
 					if (this.showSelAll) {
 						this.calcelChildSel(item);
 					}
+					this.sel(item);
 				}
 			},
 			calcelChildSel(item) { // 取消选中的子项
@@ -146,6 +154,9 @@
 				this.toggleSel(subItem);
 			},
 			showSubItem(item) {
+				if (!this.hasChildren(item)) {
+					this.toggleSel(item);
+				}
 				this.currSelId = item.id;
 			},
 			isSel(item) {
@@ -168,7 +179,7 @@
 			},
 			sel(item) {
 				// 选中数量为最大选中数
-				if (this.selItems.length >= this.maxItemNum) {
+				if (this.selItems.length == this.maxItemNum) {
 					this.showErrTip = true;
 					return;
 				}
@@ -180,6 +191,15 @@
 					items.push(Object.assign({}, val));
 				});
 				this.$emit('on-ok', items);
+			},
+			autoFontSize(item) {
+				let style = {};
+				if (item.name.length >= 12) {
+					style.fontSize = '0.8em';
+					style.textIndent = 0;
+				}
+
+				return style;
 			}
 		},
 		created: function() {
